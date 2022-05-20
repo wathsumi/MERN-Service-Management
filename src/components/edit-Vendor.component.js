@@ -1,51 +1,82 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import "react-datepicker/dist/react-datepicker.css";
-import swal from '@sweetalert/with-react'
 
-export default class CreateService extends Component {
+export default class EditVendor extends Component {
     constructor(props) {
         super(props);
 
-        this.onChangeServiceID = this.onChangeServiceID.bind(this);
-        this.onChangeServiceName = this.onChangeServiceName.bind(this);
-        this.onChangePackageType = this.onChangePackageType.bind(this);
+        this.onChangeVendorID = this.onChangeVendorID.bind(this);
+        this.onChangeCompanyName = this.onChangeCompanyName.bind(this);
+        this.onChangeAddress = this.onChangeAddress.bind(this);
         this.onChangePostalCode = this.onChangePostalCode.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.onChangeMaterials = this.onChangeMaterials.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
+
         this.state = {
-            ServiceID: '',
-            ServiceName: '',
-            PackageType: '',
+            VendorID: '',
+            CompanyName: '',
+            Address: '',
             PostalCode: '',
             Email: '',
             Description: '',
             Materials: '',
-            Service: []
+            Vendor: []
         }
     }
 
-    //set the ServiceID 
-    onChangeServiceID(e) {
+    componentDidMount() {
+        axios.get('http://localhost:5000/Vendor/' + this.props.match.params.id)
+            .then(response => {
+                this.setState({
+                    VendorID: response.data.VendorID,
+                    Address: response.data.Address,
+                    CompanyName: response.data.CompanyName,
+                    PostalCode: response.data.PostalCode,
+                    Email: response.data.Email,
+                    Description: response.data.Description,
+                    Materials: response.data.Materials,
+                })
+            })
+            .catch(function(error) {
+                console.log(error);
+            })
+
+        axios.get('http://localhost:5000/Vendor/')
+            .then(response => {
+                if (response.data.length > 0) {
+                    this.setState({
+                        Vendor: response.data.map(Vendor => Vendor.CompanyName),
+                    })
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+
+    }
+
+    //set the VendorID 
+    onChangeVendorID(e) {
         this.setState({
-            ServiceID: e.target.value
+            VendorID: e.target.value
         })
     }
 
-    //set the PackageType
-    onChangePackageType(e) {
+    //set the Address
+    onChangeAddress(e) {
         this.setState({
-            PackageType: e.target.value
+            Address: e.target.value
         })
     }
 
-    //set ServiceName
-    onChangeServiceName(e) {
+    //set CompanyName
+    onChangeCompanyName(e) {
         this.setState({
-            ServiceName: e.target.value
+            CompanyName: e.target.value
         })
     }
 
@@ -79,16 +110,13 @@ export default class CreateService extends Component {
         })
     }
 
-   
-
-    //submit Function
     onSubmit(e) {
         e.preventDefault();
-       
-        const Service = {
-            ServiceID: this.state.ServiceID,
-            ServiceName: this.state.ServiceName,
-            PackageType: this.state.PackageType,
+
+        const Vendor = {
+            VendorID: this.state.VendorID,
+            CompanyName: this.state.CompanyName,
+            Address: this.state.Address,
             PostalCode: this.state.PostalCode,
             Email: this.state.Email,
             Description: this.state.Description,
@@ -96,24 +124,12 @@ export default class CreateService extends Component {
 
         }
 
-        console.log(Service);
+        console.log(Vendor);
 
-        //validation
-        
-
-            axios.post('http://localhost:5000/Service/add', Service)
-                .then(res => console.log(res.data));
-
-            swal({
-                    title: "Done!",
-                    text: "Service Successfully Added",
-                    icon: "success",
-                    button: "Okay!"
-                })
-                .then((value) => {
-                   window.location = '/';
-                });
-        
+        axios.post('http://localhost:5000/Vendor/update/' + this.props.match.params.id, Vendor)
+            .then(res => console.log(res.data));
+        alert("Edit Successfully")
+        window.location = '/';
     }
 
     render() {
@@ -130,38 +146,38 @@ export default class CreateService extends Component {
             <div className = "col-md-8 mt-4 mx-auto" > </div> 
             <h3 className = "text-center" > 
             <font face = "Comic sans MS" size = "6" > 
-            New Service</font> </h3 >  
+            Edit Vendor</font> </h3 >  
             <form onSubmit = { this.onSubmit } >
             <div className = "form-group" >
-            <label > Service ID: </label>
+            <label > Vendor ID: </label>
             <input type = "Number"
             required className = "form-control"
-            placeholder = "Enter Service ID"
-            value = { this.state.ServiceID }
-            onChange = { this.onChangeServiceID }/>
+            placeholder = "Enter Vendor ID"
+            value = { this.state.VendorID }
+            onChange = { this.onChangeVendorID }/>
              </div >
              
               <div className = "form-group" >
             <label > Company Name: </label> 
             <input type = "text"
             required className = "form-control"
-            placeholder = "Enter Company Name"
-            value = { this.state.ServiceName }
-            onChange = { this.onChangeServiceName }/> </div > 
+            placeholder = "EnterCompany Name"
+            value = { this.state.CompanyName }
+            onChange = { this.onChangeCompanyName }/> </div > 
              <div className = "form-group" >
-            <label > PackageType: </label> 
+            <label > Address: </label> 
             <input type = "text"
             required className = "form-control"
-            placeholder = "Enter PackageType"
+            placeholder = "Enter Address"
             //maxlength = "10"
-            value = { this.state.PackageType }
-            onChange = { this.onChangePackageType }/>
+            value = { this.state.Address }
+            onChange = { this.onChangeAddress }/>
             </div > 
              <div className = "form-group" >
             <label > Posta Code: </label>
-             <input type = "Number"
+             <input type = "text"
             className = "form-control"
-            placeholder = "Enter Postal Code"
+            placeholder = "Enter PostalCode"
             value = { this.state.PostalCode }
             onChange = { this.onChangePostalCode }/> </div > 
              <div className = "form-group" >
@@ -178,17 +194,20 @@ export default class CreateService extends Component {
             <label > Brief Description of company: </label> <
             input type = "text"
             required className = "form-control"
-            placeholder = "Enter Brief Description of company"
+            placeholder = "Enter a Brief Description of company"
             value = { this.state.Description }
             onChange = { this.onChangeDescription }/>  </div>
+
+
 
             <div className = "form-group" >
             <label > SupplyMaterials And goods: </label> <
             input type = "text"
             required className = "form-control"
-            placeholder = "Enter SupplyMaterials And goods"
+            placeholder = "Enter an SupplyMaterials And goods"
             value = { this.state.Materials }
             onChange = { this.onChangeMaterials }/>  </div>
+
 
             
             
@@ -196,19 +215,10 @@ export default class CreateService extends Component {
             
             </div > <div className = "form-group" >
             <input type = "submit"
-            value = "Create"
+            value = "Edit"
             className = "btn btn-primary" />
             </div> </form > </div> </div >  </div> </div >  <br/ > < br/ > 
              </div>
         );
     }
 }
-
-
-
-
-
-
-
-
-

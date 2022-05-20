@@ -8,7 +8,7 @@ export default class Navbar extends Component {
             nav className = "navbar navbar-dark bg-dark navbar-expand-lg" >
             <
             Link to = "/"
-            className = "navbar-brand" ><font face = "Comic sans MS" size ="4"> Service </font></Link> <
+            className = "navbar-brand" ><font face = "Comic sans MS" size ="4"> Vendor </font></Link> <
             div className = "collpase navbar-collapse" >
             <form class="form-inline my-2 my-lg-0">
             <
@@ -38,4 +38,3 @@ export default class Navbar extends Component {
         );
     }
 }
-

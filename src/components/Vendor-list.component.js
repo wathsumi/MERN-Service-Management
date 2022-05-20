@@ -102,7 +102,6 @@ export default class VendorList extends Component {
         });
 
     }
-    Report (){ window.print();}
 
     render() {
         return ( <
@@ -119,7 +118,17 @@ export default class VendorList extends Component {
             <
             div className = "col-lg-9 mt-2 mb-2" >
             <
-            h4 > Vendor Report </h4> </
+            h4 > All Vendor </h4> </
+            div > <
+            div className = "col-lg-3 mt-2 mb-2" >
+            <
+            input className = "form-control"
+            type = "search"
+            placeholder = "Search by Company Name"
+            name = "searchQuery"
+            onChange = { this.handleSearchArea } >
+            </
+            input> </
             div > </
             div>
 
@@ -137,7 +146,8 @@ export default class VendorList extends Component {
             th > Postal Code </th> <
             th > E mail </th> <
             th > Brief Description of company </th> <
-            th > Supply Materials And goods </th> </
+            th > Supply Materials And goods </th> <
+            th > Actions </th> </
             tr > </
             thead> <
             tbody >
@@ -153,23 +163,33 @@ export default class VendorList extends Component {
                     td > { props.PostalCode } </td>  < 
                     td > { props.Email } </td>  <  
                     td > { props.Description } </td>  < 
-                    td > { props.Materials } </td>  
-                    
+                    td > { props.Materials } </td>  <  
+
+                    td >
+                    <
+                    Link to = { "/edit/" + props._id } >  <Button variant = "warning btn-sm"> Edit </Button> </Link>  
+                    <a href="" onClick={() => { this.deleteVendor(props._id) }}> <Button variant = "danger btn-sm"> Delete </Button> </a > 
+                    </
+                    td >
 
                     </tr>
                 )
 
             }
 
-            </tbody> </table >
+            </tbody> </
+            table >
 
-            <div className = "container" >
-           
-            
-            <input type = "Button"
-            onClick = { this.Report }
-            value = "Print This Report"
-            className = "btn btn-danger"/>
+            <
+            div style = {
+                { float: 'right' }
+            } >
+
+            <
+            Link to = "/create" >
+            <button type="button" class="btn btn-success" variant = "primary" > New Vendor </button>
+            </
+            Link >
             </div>
 
             </div>
