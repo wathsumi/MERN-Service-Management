@@ -118,13 +118,13 @@ export default class VendorList extends Component {
             <
             div className = "col-lg-9 mt-2 mb-2" >
             <
-            h4 > All Vendor </h4> </
+            h4 > All Service </h4> </
             div > <
             div className = "col-lg-3 mt-2 mb-2" >
             <
             input className = "form-control"
             type = "search"
-            placeholder = "Search by Company Name"
+            placeholder = "Search by Service Name"
             name = "searchQuery"
             onChange = { this.handleSearchArea } >
             </
@@ -187,7 +187,7 @@ export default class VendorList extends Component {
 
             <
             Link to = "/create" >
-            <button type="button" class="btn btn-success" variant = "primary" > New Vendor </button>
+            <button type="button" class="btn btn-success" variant = "primary" > New Service </button>
             </
             Link >
             </div>

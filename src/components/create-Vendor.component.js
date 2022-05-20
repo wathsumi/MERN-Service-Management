@@ -132,13 +132,13 @@ export default class CreateVendor extends Component {
             <div className = "col-md-8 mt-4 mx-auto" > </div> 
             <h3 className = "text-center" > 
             <font face = "Comic sans MS" size = "6" > 
-            New Vendor</font> </h3 >  
+            New Service</font> </h3 >  
             <form onSubmit = { this.onSubmit } >
             <div className = "form-group" >
             <label > Vendor ID: </label>
             <input type = "Number"
             required className = "form-control"
-            placeholder = "Enter Vendor ID"
+            placeholder = "Enter Service ID"
             value = { this.state.VendorID }
             onChange = { this.onChangeVendorID }/>
              </div >
