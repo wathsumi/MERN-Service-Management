@@ -8,7 +8,7 @@ const Service = props => ( <
     <
     td > { props.Service.ServiceID } </td> <
     td > { props.Service.ServiceName } </td> <
-    td > { props.Service.PackageName  } </td> <
+    td > { props.Service.PackageType } </td> <
     td > { props.Service.PostalCode } </td> <
     td > { props.Service.Email } </td> <
     td > { props.Service.Description } </td> <
@@ -123,7 +123,7 @@ export default class ServiceList extends Component {
             <
             th > Service ID </th> <
             th > Company Name </th> <
-            th > Company Street PackageName  </th> <
+            th > Company Street PackageType </th> <
             th > Postal Code </th> <
             th > E mail </th> <
             th > Brief Description of company </th> <
@@ -139,7 +139,7 @@ export default class ServiceList extends Component {
                     
                     <td > { props.ServiceID } </td>  <
                     td > { props.ServiceName } </td>  <
-                    td > { props.PackageName  } </td>  <
+                    td > { props.PackageType } </td>  <
                     td > { props.PostalCode } </td>  < 
                     td > { props.Email } </td>  <  
                     td > { props.Description } </td>  < 
@@ -166,6 +166,7 @@ export default class ServiceList extends Component {
         )
     }
 }
+
 
 
 

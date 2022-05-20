@@ -4,10 +4,10 @@ const Schema = mongoose.Schema;
 
 //Databass Schema
 
-const VendorSchema = new Schema({
-    VendorID: { type: Number, required: true },
-    CompanyName: { type: String, required: true },
-    Address: { type: String, required: true },
+const ServiceSchema = new Schema({
+    ServiceID: { type: Number, required: true },
+    ServiceName: { type: String, required: true },
+    PackageType: { type: String, required: true },
     PostalCode: { type: String, required: true },
     Email: { type: String, required: true },
     Description: { type: String, required: true },
@@ -17,8 +17,9 @@ const VendorSchema = new Schema({
     timestamps: true,
 });
 
+const Service  = mongoose.model('Service ', ServiceSchema);
+
+module.exports = Service ;
 
 
-const Vendor  = mongoose.model('Vendor ', VendorSchema);
 
-module.exports = Vendor ;
