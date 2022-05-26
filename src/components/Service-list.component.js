@@ -3,39 +3,34 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 
-
-const Vendor = props => ( <
+const Service = props => ( <
     tr >
     <
-    td > { props.Vendor.VendorID } </td> <
-    td > { props.Vendor.CompanyName } </td> <
-    td > { props.Vendor.Address } </td> <
-    td > { props.Vendor.PostalCode } </td> <
-    td > { props.Vendor.Email } </td> <
-    td > { props.Vendor.Description } </td> <
-    td > { props.Vendor.Materials } </td> <
+    td > { props.Service.ServiceID } </td> <
+    td > { props.Service.ServiceName } </td> <
+    td > { props.Service.PackageType } </td> <
+    td > { props.Service.Price } </td> <
+    td > { props.Service.NumberOfPeople } </td> <
     td >
     <
-    Link to = { "/edit/" + props.Vendor._id } > Edit </Link> | <a href=" " onClick={() => { props.deleteVendor(props.Vendor._id) }}>Delete</a > </
+    Link to = { "/update/" + props.Service._id } > Update </Link> | <a href=" " onClick={() => { props.deleteService(props.Service._id) }}>Delete</a > </
     td > </tr> 
 )
 
-export default class VendorList extends Component {
+export default class ServiceList extends Component {
     constructor(props) {
         super(props);
 
-
         this.state = {
-            Vendor: []
+            Service: []
         };
     }
 
 
-
     componentDidMount() {
-        axios.get('http://localhost:5000/Vendor/')
+        axios.get('http://localhost:5000/Service/')
             .then(response => {
-                this.setState({ Vendor: response.data })
+                this.setState({ Service: response.data })
             })
             .catch((error) => {
                 console.log(error);
@@ -43,44 +38,42 @@ export default class VendorList extends Component {
     }
 
     getPosts() {
-        axios.get('http://localhost:5000/Vendor/')
+        axios.get('http://localhost:5000/Service/')
             .then(response => {
-                this.setState({ Vendor: response.data })
+                this.setState({ Service: response.data })
             })
             .catch((error) => {
                 console.log(error);
             })
     }
 
-    deleteVendor(id) {
+    deleteService(id) {
         if (window.confirm('Are you sure?')) {
-            axios.delete('http://localhost:5000/Vendor/' + id)
+            axios.delete('http://localhost:5000/Service/' + id)
                 .then(response => { console.log(response.data) });
 
             this.setState({
-                Vendor: this.state.Vendor.filter(el => el._id !== id)
+                Service: this.state.Service.filter(el => el._id !== id)
             })
         }
     }
 
-    VendorList() {
-        return this.state.Vendor.map(currentVendor => {
-            return <Vendor Vendor = { currentVendor }
-            deleteVendor = { this.deleteVendor }
-            key = { currentVendor._id }
+    ServiceList() {
+        return this.state.Service.map(currentService => {
+            return <Service Service = { currentService }
+            deleteService = { this.deleteService }
+            key = { currentService._id }
             />;
         })
     }
 
-
-    filterData(Vendor, searchKey) {
+    filterData(Service, searchKey) {
 
         this.setState({
-            Vendor: this.state.Vendor.filter(el => el.CompanyName = searchKey)
+            Service: this.state.Service.filter(el => el.CompanyName = searchKey)
         })
 
     }
-
 
 
 
@@ -89,15 +82,14 @@ export default class VendorList extends Component {
 
         const searchKey = e.currentTarget.value;
 
-        axios.get('http://localhost:5000/Vendor/').then(response => {
-
+        axios.get('http://localhost:5000/Service/').then(response => {
 
             const resultt = response.data
             const result = resultt.filter((props) =>
-                props.CompanyName.includes(searchKey)
+                props.ServiceName.includes(searchKey)
             )
 
-            this.setState({ Vendor: result })
+            this.setState({ Service: result })
 
         });
 
@@ -114,7 +106,7 @@ export default class VendorList extends Component {
             </div>  <br/>
             
             <
-            div className = "row" >
+            div className = "coloumn" >
             <
             div className = "col-lg-9 mt-2 mb-2" >
             <
@@ -132,7 +124,6 @@ export default class VendorList extends Component {
             div > </
             div>
 
-
             <
             table class="table table-bordered table-white" >
             <
@@ -140,35 +131,31 @@ export default class VendorList extends Component {
             <
             tr >
             <
-            th > Vendor ID </th> <
-            th > Company Name </th> <
-            th > Company Street Address </th> <
-            th > Postal Code </th> <
-            th > E mail </th> <
-            th > Brief Description of company </th> <
-            th > Supply Materials And goods </th> <
+            th > Service ID </th> <
+            th > Service Name </th> <
+            th > Package Type </th> <
+            th > Price </th> <
+            th > Number Of People </th> <
             th > Actions </th> </
             tr > </
             thead> <
             tbody >
             
              {
-                this.state.Vendor.map(props =>
+                this.state.Service.map(props =>
                     <
-                    tr key = { props.VendorID } >
+                    tr key = { props.ServiceID } >
                     
-                    <td > { props.VendorID } </td>  <
-                    td > { props.CompanyName } </td>  <
-                    td > { props.Address } </td>  <
-                    td > { props.PostalCode } </td>  < 
-                    td > { props.Email } </td>  <  
-                    td > { props.Description } </td>  < 
-                    td > { props.Materials } </td>  <  
+                    <td > { props.ServiceID } </td>  <
+                    td > { props.ServiceName } </td>  <
+                    td > { props.PackageType } </td>  <
+                    td > { props.Price } </td>  < 
+                    td > { props.NumberOfPeople } </td>  <    
 
                     td >
                     <
-                    Link to = { "/edit/" + props._id } >  <Button variant = "warning btn-sm"> Edit </Button> </Link>  
-                    <a href="" onClick={() => { this.deleteVendor(props._id) }}> <Button variant = "danger btn-sm"> Delete </Button> </a > 
+                    Link to = { "/update/" + props._id } >  <Button variant = "warning btn-sm"> Update </Button> </Link>  
+                    <a href="" onClick={() => { this.deleteService(props._id) }}> <Button variant = "danger btn-sm"> Delete </Button> </a > 
                     </
                     td >
 
@@ -196,3 +183,4 @@ export default class VendorList extends Component {
         )
     }
 }
+
